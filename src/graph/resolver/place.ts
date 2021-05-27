@@ -20,12 +20,16 @@ interface PlaceCreateData {
 
 const createPlace = async (parent: unknown, arg: PlaceCreateData) => {
   console.log(arg)
-  if (!await categoryModel.findOne(arg.category)) throw new Error(`등록되지 않은 분류: "${arg.category}"`)
+  try {
+    if (!await categoryModel.findById(arg.category)) throw null
+  } catch (e) {
+    throw new Error(`등록되지 않은 분류: "${arg.category}"`)
+  }
   if (-180 < arg.location.lat || arg.location.lat > 180) throw new Error(`올바르지 않은 위도: ${arg.location.lat}`)
   if (-180 < arg.location.lon || arg.location.lon > 180) throw new Error(`올바르지 않은 경도: ${arg.location.lon}`)
 
   if (arg.tags) {
-    const invalidTags = arg.tags.filter(tagModel.findOne)
+    const invalidTags = arg.tags.filter(tagModel.findById)
     if (invalidTags.length) throw new Error(`등록되지 않은 태그 ID: ${invalidTags.join(', ')}`)
   }
 
@@ -41,7 +45,7 @@ const createPlace = async (parent: unknown, arg: PlaceCreateData) => {
   return createdPlace._id
 }
 
-export const mutations = {
+export const mutation = {
   createPlace
 }
 

@@ -1,4 +1,5 @@
 enum Env {
-  DB = "DB"
+  DB = "DB",
+  PORT = "PORT"
 }
 export default Env

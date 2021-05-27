@@ -44,6 +44,10 @@ const typeDefs = gql`
       category: String
       tags: [String]
     ): Place
+
+    createCategory(
+      label: String!
+    ): Category
   }
 
   type Query {
@@ -51,6 +55,7 @@ const typeDefs = gql`
       lat: Float!,
       lon: Float!,
     ): [Place]
+    category(query: String): [Category]
   }
 `
 
