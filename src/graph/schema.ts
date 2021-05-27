@@ -30,6 +30,7 @@ const typeDefs = gql`
     category: Category!
     tags: [Tag]!
     owner: User
+    verified: Boolean!
   }
 
   input LocationInput {

@@ -8,16 +8,15 @@ const PlaceSchema = createSchema({
   name: Type.string({
     required: true
   }),
-  location: Type.object({
-    required: true
-  }).of({
-    lon: Type.number({
+  location: {
+    type: Type.string({
+      enum: ["Point"],
       required: true
     }),
-    lat: Type.number({
+    coordinates: Type.array({
       required: true
-    })
-  }),
+    }).of(Type.number())
+  },
   category: Type.ref(Type.objectId()).to('Category', CategorySchema),
   tags: Type.array().of(Type.ref(Type.objectId()).to('Category', CategorySchema)),
   // tags: Type.array(Type.ref(Type.objectId()).to('Tag', TagSchema)),
