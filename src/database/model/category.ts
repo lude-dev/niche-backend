@@ -1,9 +1,11 @@
-import { createSchema, Type } from "ts-mongoose";
+import { createSchema, Type, typedModel } from "ts-mongoose";
 
-const CategorySchema = createSchema({
+export const CategorySchema = createSchema({
   label: Type.string({
     required: true
   })
 })
 
-export default CategorySchema
+const categoryModel = typedModel('category', CategorySchema)
+
+export default categoryModel

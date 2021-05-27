@@ -1,6 +1,7 @@
-import { createSchema, Type } from "ts-mongoose";
-import CategorySchema from "./category";
-import TagSchema from "./tag";
+import { model } from "mongoose";
+import { createSchema, Type, typedModel } from "ts-mongoose";
+import { CategorySchema } from "./category";
+import { TagSchema } from "./tag";
 import UserSchema from "./user";
 
 const PlaceSchema = createSchema({
@@ -18,8 +19,13 @@ const PlaceSchema = createSchema({
     })
   }),
   category: Type.ref(Type.objectId()).to('Category', CategorySchema),
-  tags: Type.array(Type.ref(Type.objectId()).to('Tag', TagSchema)),
-  owner: Type.ref(Type.objectId()).to('User', UserSchema)
+  tags: Type.array().of(Type.ref(Type.objectId()).to('Category', CategorySchema)),
+  // tags: Type.array(Type.ref(Type.objectId()).to('Tag', TagSchema)),
+  owner: Type.ref(Type.objectId()).to('User', UserSchema),
+  verified: Type.boolean({
+    required: true
+  })
 })
 
-export default PlaceSchema
+export const placeModel = typedModel('place', PlaceSchema)
+// export default PlaceSchema

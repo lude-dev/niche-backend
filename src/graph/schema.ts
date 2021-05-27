@@ -32,8 +32,25 @@ const typeDefs = gql`
     owner: User
   }
 
+  input LocationInput {
+    lon: Float!
+    lat: Float!
+  }
+
+  type Mutation {
+    createPlace(
+      name: String!
+      location: LocationInput!
+      category: String
+      tags: [String]
+    ): Place
+  }
+
   type Query {
-    nearPlaces: [Place]
+    nearPlaces(
+      lat: Float!,
+      lon: Float!,
+    ): [Place]
   }
 `
 

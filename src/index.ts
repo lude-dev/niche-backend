@@ -10,7 +10,7 @@ console.log(resolvers)
 
 const server = new ApolloServer({
   typeDefs,
-  resolvers: { Query: { ...resolvers } }
+  resolvers: { ...resolvers }
 })
 
 console.log(resolvers)

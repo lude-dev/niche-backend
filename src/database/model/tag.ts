@@ -1,9 +1,12 @@
-import { createSchema, Type } from "ts-mongoose";
+import { createSchema, Type, typedModel } from "ts-mongoose";
 
-const TagSchema = createSchema({
+export const TagSchema = createSchema({
   label: Type.string({
     required: true
   })
 })
 
-export default TagSchema
+const tagModel = typedModel('tag', TagSchema)
+
+export default tagModel
+
