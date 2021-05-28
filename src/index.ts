@@ -3,20 +3,21 @@ import { config } from 'dotenv'
 import * as resolvers from './graph/resolver'
 
 config()
-import './database/connection'
+import {
+  connectDatabase
+} from './database/connection'
 import typeDefs from './graph/schema'
 import getEnv from './getEnv'
 import Env from './constants/envKeys'
 
-console.log(resolvers)
+connectDatabase().then(() => {
+  console.log('Database Connected!')
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers: { ...resolvers },
+  })
 
-const server = new ApolloServer({
-  typeDefs,
-  resolvers: { ...resolvers },
+  server.listen(+getEnv(Env.PORT, '6000')).then(({ url }) => {
+    console.log(`🚀  Server ready at ${url}`);
+  })
 })
-
-console.log(resolvers)
-
-server.listen(+getEnv(Env.PORT, '6000')).then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`);
-});
