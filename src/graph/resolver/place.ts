@@ -5,8 +5,7 @@ import tagModel from '../../database/model/tag'
 import { Location } from '../../types/commonTypes'
 
 const nearPlaces = async (parent: unknown, arg: Location) => {
-  console.log(arg)
-  console.log(await placeModel.find({
+  return (await placeModel.find({
     location: {
       $near: {
         $geometry: {
@@ -17,7 +16,6 @@ const nearPlaces = async (parent: unknown, arg: Location) => {
       }
     }
   }))
-  return []
 }
 
 interface PlaceCreateData {
