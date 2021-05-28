@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { model, Schema, Types } from "mongoose";
 import { db } from "../connection";
 import { CategorySchema } from "./category";
 import { TagSchema } from "./tag";
@@ -16,13 +16,23 @@ const PlaceSchema = new Schema({
       required: true
     },
     coordinates: {
-      type: [Number],
-      required: true
-    }
+      type: [Number], // <lng, lat>
+      index: { type: '2dsphere', sparse: false },
+      required: true,
+    },
   },
-  category: [CategorySchema],
-  tags: [TagSchema],
-  owner: UserSchema,
+  category: [{
+    type: Types.ObjectId,
+    ref: 'category'
+  }],
+  tags: [{
+    type: Types.ObjectId,
+    ref: 'Tag'
+  }],
+  owner: {
+    type: Types.ObjectId,
+    ref: 'User'
+  },
   verified: {
     type: Boolean,
     required: true
@@ -30,8 +40,3 @@ const PlaceSchema = new Schema({
 })
 
 export const placeModel = model('place', PlaceSchema)
-
-// db.place.createIndex({
-//   location: '2d'
-// })
-

@@ -1,3 +1,4 @@
+import { Types } from 'mongoose'
 import categoryModel from '../../database/model/category'
 import { placeModel } from '../../database/model/place'
 import tagModel from '../../database/model/tag'
@@ -20,20 +21,17 @@ const nearPlaces = async (parent: unknown, arg: Location) => {
 }
 
 interface PlaceCreateData {
-  name: String
+  name: string
   location: {
     lon: number
     lat: number
   }
-  category: String
-  tags?: String[]
+  category: string
+  tags?: string[]
 }
 
 const createPlace = async (parent: unknown, arg: PlaceCreateData) => {
-  console.log({
-    type: "Point",
-    coordinates: [arg.location.lat, arg.location.lon]
-  })
+  console.log(await categoryModel.findById(arg.category))
   try {
     if (!await categoryModel.findById(arg.category)) throw null
   } catch (e) {
@@ -51,7 +49,7 @@ const createPlace = async (parent: unknown, arg: PlaceCreateData) => {
     name: arg.name,
     location: {
       type: "Point",
-      coordinates: [arg.location.lat, arg.location.lon]
+      coordinates: [arg.location.lon, arg.location.lat]
     },
     category: arg.category,
     tags: arg.tags,
