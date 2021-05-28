@@ -1,12 +1,14 @@
-import { createSchema, Type } from "ts-mongoose";
+import { Schema } from "mongoose"
 
-const AuthSchema = createSchema({
-  username: Type.string({
-    required: true
-  }),
-  hashedPassword: Type.string({
-    required: true
-  })
+const AuthSchema = new Schema({
+  username: {
+    required: true,
+    type: String
+  },
+  hashedPassword: {
+    required: true,
+    type: Boolean
+  }
 })
 
 export default AuthSchema

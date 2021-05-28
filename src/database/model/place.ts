@@ -1,30 +1,37 @@
-import { model } from "mongoose";
-import { createSchema, Type, typedModel } from "ts-mongoose";
+import { model, Schema } from "mongoose";
+import { db } from "../connection";
 import { CategorySchema } from "./category";
 import { TagSchema } from "./tag";
 import UserSchema from "./user";
 
-const PlaceSchema = createSchema({
-  name: Type.string({
-    required: true
-  }),
-  location: {
-    type: Type.string({
-      enum: ["Point"],
-      required: true
-    }),
-    coordinates: Type.array({
-      required: true
-    }).of(Type.number())
+const PlaceSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
   },
-  category: Type.ref(Type.objectId()).to('Category', CategorySchema),
-  tags: Type.array().of(Type.ref(Type.objectId()).to('Category', CategorySchema)),
-  // tags: Type.array(Type.ref(Type.objectId()).to('Tag', TagSchema)),
-  owner: Type.ref(Type.objectId()).to('User', UserSchema),
-  verified: Type.boolean({
+  location: {
+    type: {
+      type: String,
+      enum: ['Point'],
+      required: true
+    },
+    coordinates: {
+      type: [Number],
+      required: true
+    }
+  },
+  category: [CategorySchema],
+  tags: [TagSchema],
+  owner: UserSchema,
+  verified: {
+    type: Boolean,
     required: true
-  })
+  }
 })
 
-export const placeModel = typedModel('place', PlaceSchema)
-// export default PlaceSchema
+export const placeModel = model('place', PlaceSchema)
+
+// db.place.createIndex({
+//   location: '2d'
+// })
+

@@ -3,8 +3,19 @@ import { placeModel } from '../../database/model/place'
 import tagModel from '../../database/model/tag'
 import { Location } from '../../types/commonTypes'
 
-const nearPlaces = (parent: unknown, arg: Location) => {
+const nearPlaces = async (parent: unknown, arg: Location) => {
   console.log(arg)
+  console.log(await placeModel.find({
+    location: {
+      $near: {
+        $geometry: {
+          type: 'Point',
+          coordinates: [arg.lon, arg.lat]
+        },
+        $maxDistance: 20
+      }
+    }
+  }))
   return []
 }
 
