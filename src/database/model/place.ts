@@ -21,10 +21,10 @@ const PlaceSchema = new Schema({
       required: true,
     },
   },
-  category: [{
+  category: {
     type: Types.ObjectId,
     ref: 'category'
-  }],
+  },
   tags: [{
     type: Types.ObjectId,
     ref: 'Tag'

@@ -1,10 +1,14 @@
 import categoryModel from "../../database/model/category"
 
-const allCategory = async (query?: string) => await categoryModel.find(query ? {
-  label: {
-    $regex: `/${query}/`
-  }
-} : {})
+const allCategory = async (parent: unknown, { query }: { query?: string }) => {
+  console.log(query)
+  return await categoryModel.find(query ? {
+    label: {
+      $regex: query,
+      $options: 'i'
+    }
+  } : {})
+}
 
 const createCategory = async (parent: unknown, { label }: {
   label: string
@@ -25,6 +29,11 @@ const createCategory = async (parent: unknown, { label }: {
   return savedDocument.toObject()
 }
 
+const getCategory = (...arg: unknown[]) => {
+  console.log(arg)
+  return {}
+}
+
 export const query = {
   category: allCategory
 }
@@ -32,3 +41,5 @@ export const query = {
 export const mutation = {
   createCategory
 }
+
+export default getCategory

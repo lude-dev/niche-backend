@@ -21,6 +21,7 @@ const typeDefs = gql`
   type Tag {
     _id: ID!
     label: String!
+    place: [Place]
   }
 
   type Place {
@@ -49,6 +50,10 @@ const typeDefs = gql`
     createCategory(
       label: String!
     ): Category
+
+    createTag(
+      label: String!
+    ): Tag
   }
 
   type Query {

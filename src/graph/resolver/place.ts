@@ -3,6 +3,12 @@ import categoryModel from '../../database/model/category'
 import { placeModel } from '../../database/model/place'
 import tagModel from '../../database/model/tag'
 import { Location } from '../../types/commonTypes'
+import { Place } from '../../types/schema'
+
+const getPlace = (...id: unknown[]) => {
+  console.log(id)
+  return {}
+}
 
 const nearPlaces = async (parent: unknown, arg: Location) => {
   return (await placeModel.find({
@@ -64,4 +70,10 @@ export const mutation = {
 
 export const query = {
   nearPlaces
+}
+
+export default {
+  category(arg: Place) {
+    return categoryModel.findById(arg.category)
+  }
 }
