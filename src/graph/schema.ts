@@ -92,6 +92,7 @@ const typeDefs = gql`
       lon: Float!,
     ): [Place]
     category(query: String): [Category]
+    myHearts: [Heart]
   }
 `
 

@@ -13,7 +13,8 @@ export {
 
 export const Query = {
   ...placeResolver.query,
-  ...categoryResolver.query
+  ...categoryResolver.query,
+  ...heartResolver.query
 }
 
 export const Mutation = {

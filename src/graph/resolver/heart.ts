@@ -1,12 +1,13 @@
 import heartModel from "../../database/model/heart"
 import { placeModel } from "../../database/model/place"
+import { Context } from "../../types/commonTypes"
 import { Heart, User } from "../../types/schema"
 
 interface newHeartArg {
   place: string
 }
 
-const newHeart = async (_: unknown, { place }: newHeartArg, { user }: { user: User }) => {
+const newHeart = async (_: unknown, { place }: newHeartArg, { user }: Context) => {
   const query = {
     place,
     user: user.uid
@@ -16,6 +17,18 @@ const newHeart = async (_: unknown, { place }: newHeartArg, { user }: { user: Us
   if (queried) return queried
 
   return await (new heartModel(query)).save()
+}
+
+const myHearts = async (parent: unknown, arg: unknown, { user }: Context) => {
+  const queried = await heartModel.find({
+    user: user.uid
+  })
+  console.log(queried)
+  return queried
+}
+
+export const query = {
+  myHearts
 }
 
 export const mutation = {
