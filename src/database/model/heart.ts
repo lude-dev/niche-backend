@@ -1,4 +1,5 @@
 import { model, Schema, Types } from "mongoose"
+import { Heart } from "../../types/schema"
 
 export const HeartSchema = new Schema({
   place: {
@@ -11,6 +12,6 @@ export const HeartSchema = new Schema({
   }
 })
 
-const heartModel = model('Heart', HeartSchema)
+const heartModel = model<Heart>('Heart', HeartSchema)
 
 export default heartModel

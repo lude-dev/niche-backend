@@ -3,10 +3,13 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import getEnv from "../../getEnv"
 import Env from "../../constants/envKeys"
+import userModel from "../../database/model/user"
 
 interface AuthInfo {
   email: string
   password: string
+  name: string
+  profileImage?: string
 }
 
 const signUid = (uid: string) => jwt.sign({
@@ -34,14 +37,20 @@ const register = async (parent: undefined, arg: AuthInfo) => {
   }))
     throw new Error(`중복된 이메일이 존재합니다: ${arg.email}`)
 
-  const createdUser = await (new authModel({
+  const createdAuthInfo = await (new authModel({
     email: arg.email,
     hashedPassword: bcrypt.hashSync(arg.password, 13)
   })).save()
 
+  await (new userModel({
+    name: arg.name,
+    profileImage: arg.profileImage,
+    uid: createdAuthInfo._id
+  })).save()
+
   return {
-    email: createdUser.email,
-    accessToken: signUid(createdUser.email)
+    email: createdAuthInfo.email,
+    accessToken: signUid(createdAuthInfo.email)
   }
 }
 

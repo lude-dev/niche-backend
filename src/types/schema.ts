@@ -33,3 +33,8 @@ export interface User extends Doc {
   profile: string
   uid: string
 }
+
+export interface Heart extends Doc {
+  place: string
+  user: string
+}

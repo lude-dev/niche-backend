@@ -2,12 +2,13 @@ import Place, * as placeResolver from './place'
 import Category, * as categoryResolver from './category'
 import Tag, * as tagResolver from './tag'
 import * as authResolver from './auth'
-import * as heartResolver from './heart'
+import Heart, * as heartResolver from './heart'
 
 export {
   Place,
   Category,
-  Tag
+  Tag,
+  Heart
 }
 
 export const Query = {

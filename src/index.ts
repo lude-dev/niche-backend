@@ -11,25 +11,24 @@ import typeDefs from './graph/schema'
 import getEnv from './getEnv'
 import Env from './constants/envKeys'
 import userModel from './database/model/user'
+import { parse } from 'graphql'
 
 connectDatabase().then(() => {
   console.log('Database Connected!')
   const server = new ApolloServer({
     typeDefs,
-    resolvers: { ...resolvers },
-    async context({ req }) {
-      const token = req.headers.authorization?.split('r ')[1]
+    context: async ({ req, res }) => {
+      const token = (req.headers.authorization)?.split('r ')[1]
       if (!token) return
-      console.log(jwt.decode(token))
       const parsed = jwt.decode(token)
       if (typeof parsed !== 'object' || !parsed?.uid) return
-
       return {
         user: await userModel.findOne({
           uid: parsed.uid
         })
       }
-    }
+    },
+    resolvers: { ...resolvers },
   })
 
   server.listen(+getEnv(Env.PORT, '6000')).then(({ url }) => {
