@@ -38,3 +38,15 @@ export interface Heart extends Doc {
   place: string
   user: string
 }
+
+export interface Wallet extends Doc {
+  user: string
+  balance: number
+}
+
+export interface Comment extends Doc {
+  content: string
+  photo: string[]
+  place: string
+  user: string
+}

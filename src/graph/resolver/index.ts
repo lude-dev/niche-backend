@@ -3,12 +3,14 @@ import Category, * as categoryResolver from './category'
 import Tag, * as tagResolver from './tag'
 import * as authResolver from './auth'
 import Heart, * as heartResolver from './heart'
+import Comment, * as commentResolver from './comment'
 
 export {
   Place,
   Category,
   Tag,
-  Heart
+  Heart,
+  Comment
 }
 
 export const Query = {
@@ -22,5 +24,6 @@ export const Mutation = {
   ...categoryResolver.mutation,
   ...tagResolver.mutation,
   ...authResolver.mutation,
-  ...heartResolver.mutation
+  ...heartResolver.mutation,
+  ...commentResolver.mutation
 }

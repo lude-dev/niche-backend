@@ -48,6 +48,13 @@ const typeDefs = gql`
     accessToken: String!
   }
 
+  type Comment {
+    content: String!
+    photo: [String]!
+    place: Place!
+    user: User!
+  }
+
   input LocationInput {
     lon: Float!
     lat: Float!
@@ -84,6 +91,11 @@ const typeDefs = gql`
     newHeart(
       place: String
     ): Heart
+
+    addComment(
+      place: String!
+      content: String!
+    ):  Comment
   }
 
   type Query {

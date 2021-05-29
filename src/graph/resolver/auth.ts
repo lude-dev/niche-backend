@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 import getEnv from "../../getEnv"
 import Env from "../../constants/envKeys"
 import userModel from "../../database/model/user"
+import { walletModel } from "../../database/model/wallet"
 
 interface AuthInfo {
   email: string
@@ -46,6 +47,10 @@ const register = async (parent: undefined, arg: AuthInfo) => {
     name: arg.name,
     profileImage: arg.profileImage,
     uid: createdAuthInfo._id
+  })).save()
+
+  await (new walletModel({
+    user: createdAuthInfo._id
   })).save()
 
   return {
