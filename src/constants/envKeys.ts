@@ -1,5 +1,6 @@
 enum Env {
   DB = "DB",
-  PORT = "PORT"
+  PORT = "PORT",
+  JWT_KEY = "JWT_KEY"
 }
 export default Env

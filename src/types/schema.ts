@@ -22,3 +22,8 @@ export interface Place extends Doc {
   name: string
   verified: boolean
 }
+
+export interface Auth extends Doc {
+  email: string
+  hashedPassword: string
+}

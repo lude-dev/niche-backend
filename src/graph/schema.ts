@@ -34,6 +34,11 @@ const typeDefs = gql`
     verified: Boolean!
   }
 
+  type RegisterdInfo {
+    email: String!
+    accessToken: String!
+  }
+
   input LocationInput {
     lon: Float!
     lat: Float!
@@ -54,6 +59,11 @@ const typeDefs = gql`
     createTag(
       label: String!
     ): Tag
+
+    registerUser(
+      email: String!
+      password: String!
+    ): RegisterdInfo
   }
 
   type Query {

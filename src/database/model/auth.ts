@@ -1,14 +1,16 @@
-import { Schema } from "mongoose"
+import { model, Schema } from "mongoose"
+import { Auth } from "../../types/schema"
 
-const AuthSchema = new Schema({
-  username: {
+export const AuthSchema = new Schema({
+  email: {
     required: true,
     type: String
   },
   hashedPassword: {
     required: true,
-    type: Boolean
+    type: String
   }
 })
 
-export default AuthSchema
+const authModel = model<Auth>('Auth', AuthSchema)
+export default authModel

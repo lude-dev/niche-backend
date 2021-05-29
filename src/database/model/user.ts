@@ -1,5 +1,5 @@
 import { Schema, Types } from "mongoose";
-import AuthSchema from "./auth";
+import { AuthSchema } from "./auth";
 
 const UserSchema = new Schema({
   name: {
