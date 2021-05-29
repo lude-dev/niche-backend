@@ -23,7 +23,7 @@ const PlaceSchema = new Schema({
   },
   category: {
     type: Types.ObjectId,
-    ref: 'category'
+    ref: 'Category'
   },
   tags: [{
     type: Types.ObjectId,
@@ -39,4 +39,4 @@ const PlaceSchema = new Schema({
   }
 })
 
-export const placeModel = model('place', PlaceSchema)
+export const placeModel = model('Place', PlaceSchema)

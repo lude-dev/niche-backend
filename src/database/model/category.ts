@@ -7,6 +7,6 @@ export const CategorySchema = new Schema({
   }
 })
 
-const categoryModel = model('category', CategorySchema)
+const categoryModel = model('Category', CategorySchema)
 
 export default categoryModel

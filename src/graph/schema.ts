@@ -34,6 +34,11 @@ const typeDefs = gql`
     verified: Boolean!
   }
 
+  type Heart {
+    _id: ID!
+    place: Place
+  }
+
   type TokenInfo {
     accessToken: String!
   }
@@ -67,12 +72,18 @@ const typeDefs = gql`
     registerUser(
       email: String!
       password: String!
+      name: String!
+      profileImage: String
     ): RegisterdInfo
 
     login(
       email: String!
       password: String!
     ): TokenInfo
+
+    newHeart(
+      place: String
+    ): Heart
   }
 
   type Query {

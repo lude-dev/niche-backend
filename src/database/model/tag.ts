@@ -8,7 +8,7 @@ export const TagSchema = new Schema({
   }
 })
 
-const tagModel = model<Tag>('tag', TagSchema)
+const tagModel = model<Tag>('Tag', TagSchema)
 
 export default tagModel
 

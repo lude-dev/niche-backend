@@ -1,4 +1,5 @@
-import { Schema, Types } from "mongoose";
+import { model, Schema, Types } from "mongoose";
+import { User } from "../../types/schema";
 import { AuthSchema } from "./auth";
 
 const UserSchema = new Schema({
@@ -7,7 +8,13 @@ const UserSchema = new Schema({
     type: String,
   },
   profileImage: String,
-  uid: AuthSchema
+  uid: {
+    type: Types.ObjectId,
+    ref: 'Auth',
+    unique: true
+  }
 })
 
-export default UserSchema
+const userModel = model<User>('User', UserSchema)
+
+export default userModel

@@ -27,3 +27,9 @@ export interface Auth extends Doc {
   email: string
   hashedPassword: string
 }
+
+export interface User extends Doc {
+  name: string
+  profile: string
+  uid: string
+}
