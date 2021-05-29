@@ -11,11 +11,13 @@ const commentSchema = new Schema({
   }],
   user: {
     type: Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    required: true
   },
   place: {
     type: Types.ObjectId,
-    ref: 'Place'
+    ref: 'Place',
+    required: true
   }
 })
 

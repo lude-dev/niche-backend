@@ -14,8 +14,7 @@ const typeDefs = gql`
   type User {
     _id: ID!
     name: String!
-    email: String!
-    profileImage: String!
+    profileImage: String
   }
 
   type Tag {
@@ -32,6 +31,7 @@ const typeDefs = gql`
     tags: [Tag]!
     owner: User
     verified: Boolean!
+    comment: [Comment]!
   }
 
   type Heart {
@@ -104,6 +104,7 @@ const typeDefs = gql`
       lon: Float!,
     ): [Place]
     category(query: String): [Category]
+    place(placeId: ID!): Place
     myHearts: [Heart]
   }
 `

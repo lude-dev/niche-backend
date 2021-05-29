@@ -1,5 +1,6 @@
 import { Types } from 'mongoose'
 import categoryModel from '../../database/model/category'
+import commentModel from '../../database/model/comment'
 import { placeModel } from '../../database/model/place'
 import tagModel from '../../database/model/tag'
 import { Location } from '../../types/commonTypes'
@@ -69,11 +70,19 @@ export const mutation = {
 }
 
 export const query = {
-  nearPlaces
+  nearPlaces,
+  place(parent: unknown, { placeId }: { placeId: string }) {
+    return placeModel.findById(placeId)
+  }
 }
 
 export default {
   category(arg: Place) {
     return categoryModel.findById(arg.category)
+  },
+  comment(parent: Place) {
+    return commentModel.find({
+      place: parent._id
+    })
   }
 }
