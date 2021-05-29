@@ -9,15 +9,30 @@ interface AuthInfo {
   password: string
 }
 
-const login = (parent: undefined, arg: AuthInfo) => {
+const signUid = (uid: string) => jwt.sign({
+  uid
+}, getEnv(Env.JWT_KEY), {
+  expiresIn: '60d'
+})
 
+const login = async (parent: undefined, arg: AuthInfo) => {
+  const queriedUser = await authModel.findOne({
+    email: arg.email
+  })
+
+  if (!queriedUser || !bcrypt.compareSync(arg.password, queriedUser.hashedPassword))
+    throw new Error(`일치하는 로그인 정보를 찾을 수 없습니다`)
+
+  return {
+    accessToken: signUid(queriedUser._id)
+  }
 }
 
 const register = async (parent: undefined, arg: AuthInfo) => {
   if (await authModel.findOne({
     email: arg.email
   }))
-    throw new Error(`이미 존재하는 유저입니다: ${arg.email}`)
+    throw new Error(`중복된 이메일이 존재합니다: ${arg.email}`)
 
   const createdUser = await (new authModel({
     email: arg.email,
@@ -26,14 +41,11 @@ const register = async (parent: undefined, arg: AuthInfo) => {
 
   return {
     email: createdUser.email,
-    accessToken: jwt.sign({
-      uid: createdUser._id
-    }, getEnv(Env.JWT_KEY), {
-      expiresIn: '60d'
-    })
+    accessToken: signUid(createdUser.email)
   }
 }
 
 export const mutation = {
-  registerUser: register
+  registerUser: register,
+  login
 }

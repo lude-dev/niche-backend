@@ -34,6 +34,10 @@ const typeDefs = gql`
     verified: Boolean!
   }
 
+  type TokenInfo {
+    accessToken: String!
+  }
+
   type RegisterdInfo {
     email: String!
     accessToken: String!
@@ -64,6 +68,11 @@ const typeDefs = gql`
       email: String!
       password: String!
     ): RegisterdInfo
+
+    login(
+      email: String!
+      password: String!
+    ): TokenInfo
   }
 
   type Query {
