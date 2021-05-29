@@ -1,9 +1,10 @@
 import { Types } from 'mongoose'
 import categoryModel from '../../database/model/category'
 import commentModel from '../../database/model/comment'
+import heartModel from '../../database/model/heart'
 import { placeModel } from '../../database/model/place'
 import tagModel from '../../database/model/tag'
-import { Location } from '../../types/commonTypes'
+import { Context, Location } from '../../types/commonTypes'
 import { Place } from '../../types/schema'
 
 const getPlace = (...id: unknown[]) => {
@@ -82,6 +83,12 @@ export default {
   },
   comment(parent: Place) {
     return commentModel.find({
+      place: parent._id
+    })
+  },
+  hearted(parent: Place, arg: unknown, context: Context) {
+    return !!heartModel.findOne({
+      user: context.user.uid,
       place: parent._id
     })
   }

@@ -32,6 +32,7 @@ const typeDefs = gql`
     owner: User
     verified: Boolean!
     comment: [Comment]!
+    hearted: Boolean!
   }
 
   type Heart {
