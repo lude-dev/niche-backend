@@ -4,6 +4,7 @@ import { Context, Location } from "../../types/commonTypes";
 import { FixReport, LocationField } from "../../types/schema";
 import { TYPE } from '../../database/model/fixReport'
 import { nearPlaces } from "./place";
+import REPORT_APPROVE_THRESHOLD from "../../constants/reportApproveThreshold";
 
 interface NewFixReport {
   placeId: string
@@ -62,6 +63,50 @@ const getNearFixReport = async (parent: unknown, arg: Location) => {
     }
   })
   return nearReprots
+}
+
+export const assessFixReport = async (parent: unknown, { fixReportId, isRight }: {
+  fixReportId: string;
+  isRight: boolean
+}) => {
+  const queriedReport = await fixReportModel.findById(fixReportId)
+  if (!queriedReport) throw new Error("알 수 없는 참여 정보에요")
+  const threshold = REPORT_APPROVE_THRESHOLD[queriedReport.type]
+
+  if (queriedReport.approved < threshold - 1) {
+    queriedReport.set('approved', queriedReport.approved + 1)
+    return await queriedReport.save()
+  }
+
+  const place = placeModel.findById(queriedReport.placeId)
+  if (!place) throw new Error("위치 정보를 찾을 수 없어요")
+
+  if ([
+    'category',
+    'name'
+  ].includes(queriedReport.type))
+    place.set(queriedReport.type, queriedReport.value)
+
+  if (queriedReport.type === 'location')
+    place.set('location', queriedReport.newLocation)
+
+  if (queriedReport.type === 'tag') {
+    if (!queriedReport.value) throw new Error("변경할 태그 정보가 주어지지 않았습니다");
+    place.set('tags', (({
+      add: (tags, target) => [...tags, target],
+      remove: (tags, target) => {
+        const tagIndex = tags.indexOf(target)
+        return [...tags.slice(0, tagIndex), ...tags.slice(tagIndex + 1)]
+      },
+      set: (_, target) => [target]
+    }) as Record<
+      | "add" | "remove" | "set",
+      (tags: string[], target: string) => string[]>)
+    [queriedReport.action](place.tags, queriedReport.value))
+  }
+
+  await queriedReport.remove()
+  return await place.save()
 }
 
 export const query = {

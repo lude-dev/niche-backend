@@ -67,8 +67,11 @@ export const mutation = {
 
 export const query = {
   nearPlaces,
-  place(parent: unknown, { placeId }: { placeId: string }) {
-    return placeModel.findById(placeId)
+  async place(parent: unknown, { placeId }: { placeId: string }) {
+    const queriedPlace = await placeModel.findById(placeId)
+    console.log(queriedPlace)
+    if (!queriedPlace) throw new Error("존재하지 않는 가게입니다")
+    return queriedPlace
   }
 }
 

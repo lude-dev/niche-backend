@@ -53,8 +53,8 @@ export interface Comment extends Doc {
 
 export interface FixReport extends Doc {
   placeId: string
-  type: string
-  action: | 'name' | 'location' | 'category' | 'tags'
+  type: | 'name' | 'location' | 'category' | 'tag'
+  action: | 'set' | 'remove' | 'add'
   value?: string
   newLocation?: LocationField
   approved: number
