@@ -134,6 +134,10 @@ const typeDefs = gql`
     category(query: String): [Category]
     place(placeId: ID!): Place
     myHearts: [Heart]
+    nearFixReport(
+      lat: Float!,
+      lon: Float!,
+    ): [FixReport]
   }
 `
 

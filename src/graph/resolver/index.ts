@@ -17,7 +17,8 @@ export {
 export const Query = {
   ...placeResolver.query,
   ...categoryResolver.query,
-  ...heartResolver.query
+  ...heartResolver.query,
+  ...fixReportResolver.query
 }
 
 export const Mutation = {

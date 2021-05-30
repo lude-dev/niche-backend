@@ -56,11 +56,13 @@ const createFixReport = async (parent: unknown, arg: NewFixReport, context: Cont
 
 const getNearFixReport = async (parent: unknown, arg: Location) => {
   const nearPlaceIds = (await nearPlaces(undefined, arg)).map(e => e._id)
+  console.log(nearPlaceIds)
   const nearReprots = await fixReportModel.find({
     placeId: {
       $in: nearPlaceIds
     }
   })
+  console.log(nearReprots)
   return nearReprots
 }
 
