@@ -4,6 +4,7 @@ import Tag, * as tagResolver from './tag'
 import * as authResolver from './auth'
 import Heart, * as heartResolver from './heart'
 import Comment, * as commentResolver from './comment'
+import * as fixReportResolver from './fixReport'
 
 export {
   Place,
@@ -25,5 +26,6 @@ export const Mutation = {
   ...tagResolver.mutation,
   ...authResolver.mutation,
   ...heartResolver.mutation,
-  ...commentResolver.mutation
+  ...commentResolver.mutation,
+  ...fixReportResolver.mutation
 }

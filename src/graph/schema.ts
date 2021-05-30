@@ -56,6 +56,25 @@ const typeDefs = gql`
     user: User!
   }
 
+  type FixReport {
+    place: Place!
+    type: String!
+    action: String!
+    value: String
+    newLocation: Location
+    approved: Int!
+  }
+
+  type FixReportPile {
+    place: Place!
+    properties: [FixReport]
+  }
+
+  input FixTag {
+    action: String
+    tagId: String
+  }
+
   input LocationInput {
     lon: Float!
     lat: Float!
@@ -97,6 +116,14 @@ const typeDefs = gql`
       place: String!
       content: String!
     ):  Comment
+
+    createFixReport(
+      placeId: String!
+      name: String
+      location: LocationInput
+      category: String
+      tag: FixTag
+    ): FixReportPile
   }
 
   type Query {

@@ -1,4 +1,4 @@
-interface Location {
+export interface LocationField {
   coordinates: number[]
   type: 'Point'
 }
@@ -16,7 +16,7 @@ export interface Tag extends Doc {
 }
 
 export interface Place extends Doc {
-  location: Location
+  location: LocationField
   category: Category
   tags: Tag[]
   name: string
@@ -49,4 +49,13 @@ export interface Comment extends Doc {
   photo: string[]
   place: string
   user: string
+}
+
+export interface FixReport extends Doc {
+  placeId: string
+  type: string
+  action: | 'name' | 'location' | 'category' | 'tags'
+  value?: string
+  newLocation?: LocationField
+  approved: number
 }
