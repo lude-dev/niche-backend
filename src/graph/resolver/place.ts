@@ -7,12 +7,7 @@ import tagModel from '../../database/model/tag'
 import { Context, Location } from '../../types/commonTypes'
 import { Place } from '../../types/schema'
 
-const getPlace = (...id: unknown[]) => {
-  console.log(id)
-  return {}
-}
-
-const nearPlaces = async (parent: unknown, arg: Location) => {
+export const nearPlaces = async (parent: unknown, arg: Location): Promise<Place[]> => {
   return (await placeModel.find({
     location: {
       $near: {
@@ -91,5 +86,11 @@ export default {
       user: context.user.uid,
       place: parent._id
     })
+  },
+  location(parent: Place) {
+    return {
+      lon: parent.location.coordinates[0],
+      lat: parent.location.coordinates[1],
+    }
   }
 }
