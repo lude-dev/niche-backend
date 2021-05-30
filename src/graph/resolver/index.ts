@@ -4,14 +4,15 @@ import Tag, * as tagResolver from './tag'
 import * as authResolver from './auth'
 import Heart, * as heartResolver from './heart'
 import Comment, * as commentResolver from './comment'
-import * as fixReportResolver from './fixReport'
+import FixReport, * as fixReportResolver from './fixReport'
 
 export {
   Place,
   Category,
   Tag,
   Heart,
-  Comment
+  Comment,
+  FixReport
 }
 
 export const Query = {
