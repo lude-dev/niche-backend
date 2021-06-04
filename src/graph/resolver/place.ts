@@ -38,7 +38,7 @@ export const nearPlaces = async (parent: unknown, arg: Location): Promise<Place[
         $gte: PLACE_REGISTER_THRESHOLD
       }
     }
-  }]))[0]
+  }]))
   console.log(places)
   return places
 }
