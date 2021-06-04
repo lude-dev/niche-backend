@@ -128,6 +128,10 @@ const typeDefs = gql`
     verifyPlace(
       placeId: String!
     ): Place
+
+    approveFixReport(
+      fixReportId: ID!
+    ): FixReport
   }
 
   type Query {

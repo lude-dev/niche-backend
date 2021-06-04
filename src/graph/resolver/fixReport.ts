@@ -65,9 +65,8 @@ const getNearFixReport = async (parent: unknown, arg: Location) => {
   return nearReprots
 }
 
-export const assessFixReport = async (parent: unknown, { fixReportId, isRight }: {
+export const approveFixReport = async (parent: unknown, { fixReportId }: {
   fixReportId: string;
-  isRight: boolean
 }) => {
   const queriedReport = await fixReportModel.findById(fixReportId)
   if (!queriedReport) throw new Error("알 수 없는 참여 정보에요")
@@ -105,8 +104,8 @@ export const assessFixReport = async (parent: unknown, { fixReportId, isRight }:
     [queriedReport.action](place.tags, queriedReport.value))
   }
 
-  await queriedReport.remove()
-  return await place.save()
+  await place.save()
+  return await queriedReport.remove()
 }
 
 export const query = {
@@ -114,7 +113,8 @@ export const query = {
 }
 
 export const mutation = {
-  createFixReport
+  createFixReport,
+  approveFixReport
 }
 
 export default {
