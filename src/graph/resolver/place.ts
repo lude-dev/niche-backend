@@ -132,5 +132,15 @@ export default {
   },
   verified(parent: Place) {
     return parent.verifier.length > PLACE_REGISTER_THRESHOLD
+  },
+  heartQuantity(parent: Place) {
+    return heartModel.count({
+      place: parent._id
+    })
+  },
+  commentQuantity(parent: Place) {
+    return commentModel.count({
+      place: parent._id
+    })
   }
 }

@@ -33,6 +33,8 @@ const typeDefs = gql`
     verified: Boolean!
     comment: [Comment]!
     hearted: Boolean!
+    heartQuantity: Int!
+    commentQuantity: Int!
   }
 
   type Heart {
@@ -109,6 +111,10 @@ const typeDefs = gql`
     ): TokenInfo
 
     newHeart(
+      place: String
+    ): Heart
+
+    removeHeart(
       place: String
     ): Heart
 

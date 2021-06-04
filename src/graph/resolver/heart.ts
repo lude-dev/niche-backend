@@ -19,6 +19,18 @@ const newHeart = async (_: unknown, { place }: newHeartArg, { user }: Context) =
   return await (new heartModel(query)).save()
 }
 
+const removeHeart = async (parent: unknown, { place }: newHeartArg, { user }: Context) => {
+  const query = {
+    place,
+    user: user.uid
+  }
+
+  const queried = await heartModel.findOne(query)
+  if (queried) return queried
+
+  return await (new heartModel(query)).remove()
+}
+
 const myHearts = async (parent: unknown, arg: unknown, { user }: Context) => {
   const queried = await heartModel.find({
     user: user.uid
@@ -32,7 +44,8 @@ export const query = {
 }
 
 export const mutation = {
-  newHeart
+  newHeart,
+  removeHeart
 }
 
 export default {
