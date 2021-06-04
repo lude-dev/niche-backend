@@ -4,6 +4,16 @@ import { Tag } from "../../types/schema"
 
 const getAllTags = () => tagModel.find({})
 
+const searchTag = (parent: unknown, { query }: { query: string }) => {
+  console.log(query)
+  return tagModel.find({
+    label: {
+      $regex: query,
+      $options: 'i'
+    }
+  })
+}
+
 const createTag = async (parent: unknown, { label }: {
   label: string
 }) => {
@@ -18,16 +28,20 @@ const createTag = async (parent: unknown, { label }: {
   })).save()
 }
 
+export const query = {
+  tags: getAllTags,
+  searchTag
+}
+
 export const mutation = {
   createTag
 }
 
 export default {
   place(arg: Tag) {
-    placeModel.find({
-      tag: {
-        $contain: arg._id
-      }
+    console.log(arg._id)
+    return placeModel.find({
+      tags: arg._id
     })
   }
 }

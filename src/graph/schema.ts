@@ -30,7 +30,7 @@ const typeDefs = gql`
     category: Category!
     tags: [Tag]!
     owner: User
-    verified: Boolean!
+    verifiedCount: Boolean!
     comment: [Comment]!
     hearted: Boolean!
   }
@@ -124,6 +124,10 @@ const typeDefs = gql`
       category: String
       tag: FixTag
     ): FixReportPile
+
+    verifyPlace(
+      placeId: String!
+    ): Place
   }
 
   type Query {
@@ -138,6 +142,11 @@ const typeDefs = gql`
       lat: Float!,
       lon: Float!,
     ): [FixReport]
+    allTag: [Tag]
+    searchTag(
+      query: String
+    ): [Tag]
+    tags: [Tag]
   }
 `
 

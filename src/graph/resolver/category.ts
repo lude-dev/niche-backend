@@ -1,7 +1,6 @@
 import categoryModel from "../../database/model/category"
 
 const allCategory = async (parent: unknown, { query }: { query?: string }) => {
-  console.log(query)
   return await categoryModel.find(query ? {
     label: {
       $regex: query,
