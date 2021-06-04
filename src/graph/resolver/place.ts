@@ -1,4 +1,5 @@
 import { Types } from 'mongoose'
+import REPORT_APPROVE_THRESHOLD, { PLACE_REGISTER_THRESHOLD } from '../../constants/reportApproveThreshold'
 import categoryModel from '../../database/model/category'
 import commentModel from '../../database/model/comment'
 import heartModel from '../../database/model/heart'
@@ -8,17 +9,38 @@ import { Context, Location } from '../../types/commonTypes'
 import { Place } from '../../types/schema'
 
 export const nearPlaces = async (parent: unknown, arg: Location): Promise<Place[]> => {
-  return (await placeModel.find({
-    location: {
-      $near: {
-        $geometry: {
-          type: 'Point',
-          coordinates: [arg.lon, arg.lat]
-        },
-        $maxDistance: 20
+  const places = (await placeModel.aggregate([{
+    $geoNear: {
+      spherical: true,
+      maxDistance: 10000,
+      near: {
+        type: 'Point',
+        coordinates: [arg.lon, arg.lat],
+      },
+      distanceField: 'distance',
+      key: 'location'
+    }
+  }, {
+    $project: {
+      verifiedCount: {
+        $size: "$verifier"
+      },
+      name: true,
+      location: true,
+      category: true,
+      tags: true,
+      owner: true,
+      verifier: true
+    }
+  }, {
+    $match: {
+      verifiedCount: {
+        $gte: PLACE_REGISTER_THRESHOLD
       }
     }
-  }))
+  }]))[0]
+  console.log(places)
+  return places
 }
 
 interface PlaceCreateData {
@@ -32,7 +54,6 @@ interface PlaceCreateData {
 }
 
 const createPlace = async (parent: unknown, arg: PlaceCreateData) => {
-  console.log(await categoryModel.findById(arg.category))
   try {
     if (!await categoryModel.findById(arg.category)) throw null
   } catch (e) {
@@ -54,15 +75,28 @@ const createPlace = async (parent: unknown, arg: PlaceCreateData) => {
     },
     category: arg.category,
     tags: arg.tags,
-    verified: false
+    verifier: []
   })
 
   const createdPlace = await newPlace.save()
   return createdPlace
 }
 
+const verifyPlace = async (parent: unknown, { placeId }: { placeId: string }, context: Context) => {
+  if (!context.user)
+    throw new Error("로그인이 필요합니다")
+  const place = await placeModel.findById(placeId)
+  if (!place) throw new Error("존재하지 않는 가게입니다")
+
+  const newArr = ([...place.verifier, context.user.uid])
+  const uniqueArr = newArr.filter((item, index) => newArr.indexOf(item) !== index)
+  place.set('verifier', uniqueArr)
+  return await place.save()
+}
+
 export const mutation = {
-  createPlace
+  createPlace,
+  verifyPlace
 }
 
 export const query = {
@@ -95,5 +129,8 @@ export default {
       lon: parent.location.coordinates[0],
       lat: parent.location.coordinates[1],
     }
+  },
+  verified(parent: Place) {
+    return parent.verifier.length > PLACE_REGISTER_THRESHOLD
   }
 }

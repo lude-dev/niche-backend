@@ -5,4 +5,5 @@ const REPORT_APPROVE_THRESHOLD = {
   location: 5
 }
 
+export const PLACE_REGISTER_THRESHOLD = 10
 export default REPORT_APPROVE_THRESHOLD

@@ -30,7 +30,7 @@ const typeDefs = gql`
     category: Category!
     tags: [Tag]!
     owner: User
-    verifiedCount: Boolean!
+    verified: Boolean!
     comment: [Comment]!
     hearted: Boolean!
   }

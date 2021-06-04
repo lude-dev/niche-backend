@@ -78,7 +78,7 @@ export const assessFixReport = async (parent: unknown, { fixReportId, isRight }:
     return await queriedReport.save()
   }
 
-  const place = placeModel.findById(queriedReport.placeId)
+  const place = await placeModel.findById(queriedReport.placeId)
   if (!place) throw new Error("위치 정보를 찾을 수 없어요")
 
   if ([

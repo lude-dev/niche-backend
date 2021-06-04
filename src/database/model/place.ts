@@ -1,4 +1,5 @@
 import { model, Schema, Types } from "mongoose";
+import { Place } from "../../types/schema";
 import { db } from "../connection";
 import { CategorySchema } from "./category";
 import { TagSchema } from "./tag";
@@ -33,10 +34,11 @@ const PlaceSchema = new Schema({
     type: Types.ObjectId,
     ref: 'User'
   },
-  verified: {
-    type: Boolean,
+  verifier: [{
+    type: Types.ObjectId,
+    ref: 'User',
     required: true
-  }
+  }]
 })
 
-export const placeModel = model('Place', PlaceSchema)
+export const placeModel = model<Place>('Place', PlaceSchema)

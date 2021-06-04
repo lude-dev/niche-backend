@@ -17,10 +17,10 @@ export interface Tag extends Doc {
 
 export interface Place extends Doc {
   location: LocationField
-  category: Category
-  tags: Tag[]
+  category: string
+  tags: string[]
   name: string
-  verified: boolean
+  verifier: string[]
 }
 
 export interface Auth extends Doc {
