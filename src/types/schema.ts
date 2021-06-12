@@ -59,11 +59,12 @@ export interface FixReport extends Doc {
   value?: string
   newLocation?: LocationField
   approved: number
+  user: string
 }
 
 export interface Transaction extends Doc {
   amount: number
-  reasen?: string
+  reason?: string
   from: string
   to: string
 }

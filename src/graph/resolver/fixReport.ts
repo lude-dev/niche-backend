@@ -6,6 +6,8 @@ import { TYPE } from '../../database/model/fixReport'
 import { nearPlaces } from "./place";
 import REPORT_APPROVE_THRESHOLD from "../../constants/reportApproveThreshold";
 import { transferWalletBalance } from "../../transaction/transfer";
+import userModel from "../../database/model/user";
+import { User } from ".";
 
 interface NewFixReport {
   placeId: string
@@ -71,6 +73,15 @@ export const approveFixReport = async (parent: unknown, { fixReportId }: {
 }, { user }: Context) => {
   const queriedReport = await fixReportModel.findById(fixReportId)
   if (!queriedReport) throw new Error("알 수 없는 참여 정보에요")
+
+  const fixReportApplicator = await userModel.findOne({
+    uid: queriedReport.user
+  })
+
+  await transferWalletBalance(null, user, 100, "수정 검토 참여 보상")
+  console.log(fixReportApplicator)
+  if (fixReportApplicator) await transferWalletBalance(null, fixReportApplicator, 500, "다른 사람이 제안을 승인했습니다")
+
   const threshold = REPORT_APPROVE_THRESHOLD[queriedReport.type]
 
   if (queriedReport.approved < threshold - 1) {
@@ -106,8 +117,6 @@ export const approveFixReport = async (parent: unknown, { fixReportId }: {
   }
 
   await place.save()
-
-  await transferWalletBalance(null, user, 1000, "수정 참여보상")
 
   return await queriedReport.remove()
 }

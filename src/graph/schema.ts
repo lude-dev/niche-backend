@@ -11,9 +11,17 @@ const typeDefs = gql`
     label: String
   }
 
+  type Transaction {
+    amount: Int!
+    reason: String
+    from: Wallet
+    to: Wallet
+  }
+
   type Wallet {
     user: User!
     balance: Int!
+    transactions: [Transaction]!
   }
 
   type User {

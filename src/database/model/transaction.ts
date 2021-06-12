@@ -7,7 +7,7 @@ const transactionSchema = new Schema({
     type: Number,
     required: true,
   },
-  reasen: String,
+  reason: String,
   from: {
     type: Types.ObjectId,
     ref: 'Wallet',

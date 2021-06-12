@@ -6,6 +6,8 @@ import Heart, * as heartResolver from './heart'
 import Comment, * as commentResolver from './comment'
 import FixReport, * as fixReportResolver from './fixReport'
 import User, * as UserResolver from './user'
+import Wallet from './wallet'
+import Transaction from './transaction'
 
 export {
   Place,
@@ -14,7 +16,9 @@ export {
   Heart,
   Comment,
   FixReport,
-  User
+  User,
+  Wallet,
+  Transaction
 }
 
 export const Query = {
