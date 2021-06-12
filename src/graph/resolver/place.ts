@@ -32,14 +32,52 @@ export const nearPlaces = async (parent: unknown, arg: Location): Promise<Place[
       owner: true,
       verifier: true
     }
+  },
+    // {
+    //   $match: {
+    //     verifiedCount: {
+    //       $gte: PLACE_REGISTER_THRESHOLD
+    //     }
+    //   }
+    // }
+  ]))
+  console.log(places)
+  return places
+}
+
+export const unverifiedNearPlaces = async (parent: unknown, arg: Location): Promise<Place[]> => {
+  const places = (await placeModel.aggregate([{
+    $geoNear: {
+      spherical: true,
+      maxDistance: 10000,
+      near: {
+        type: 'Point',
+        coordinates: [arg.lon, arg.lat],
+      },
+      distanceField: 'distance',
+      key: 'location'
+    }
   }, {
+    $project: {
+      verifiedCount: {
+        $size: "$verifier"
+      },
+      name: true,
+      location: true,
+      category: true,
+      tags: true,
+      owner: true,
+      verifier: true
+    }
+  },
+  {
     $match: {
       verifiedCount: {
-        $gte: PLACE_REGISTER_THRESHOLD
+        $lte: PLACE_REGISTER_THRESHOLD
       }
     }
-  }]))
-  console.log(places)
+  }
+  ]))
   return places
 }
 
@@ -111,6 +149,7 @@ export const mutation = {
 export const query = {
   nearPlaces,
   queryPlaces,
+  unverifiedNearPlaces,
   async place(parent: unknown, { placeId }: { placeId: string }) {
     const queriedPlace = await placeModel.findById(placeId)
     console.log(queriedPlace)

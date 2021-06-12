@@ -159,6 +159,11 @@ const typeDefs = gql`
       lat: Float!,
       lon: Float!,
     ): [Place]
+    
+    unverifiedNearPlaces(
+      lat: Float!,
+      lon: Float!,
+    ): [Place]
     category(query: String): [Category]
     place(placeId: ID!): Place
     myHearts: [Heart]
