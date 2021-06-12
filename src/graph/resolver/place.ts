@@ -110,7 +110,7 @@ const createPlace = async (parent: unknown, arg: PlaceCreateData) => {
   if (arg.location.lon < -180 || arg.location.lon > 180) throw new Error(`올바르지 않은 경도: ${arg.location.lon}`)
 
   if (arg.tags) {
-    const invalidTags = arg.tags.filter(tagModel.findById)
+    const invalidTags = arg.tags.filter(tagId => !tagModel.findById(tagId))
     if (invalidTags.length) throw new Error(`등록되지 않은 태그 ID: ${invalidTags.join(', ')}`)
   }
 
