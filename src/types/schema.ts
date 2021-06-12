@@ -60,3 +60,10 @@ export interface FixReport extends Doc {
   newLocation?: LocationField
   approved: number
 }
+
+export interface Transaction extends Doc {
+  amount: number
+  reasen?: string
+  from: string
+  to: string
+}

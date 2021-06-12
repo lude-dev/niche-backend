@@ -1,4 +1,5 @@
 import { model, Schema, Types } from "mongoose";
+import { Wallet } from "../../types/schema";
 
 const walletSchema = new Schema({
   user: {
@@ -8,7 +9,8 @@ const walletSchema = new Schema({
   balance: {
     type: Number,
     default: 0
-  }
+  },
+  isBank: Boolean
 })
 
-export const walletModel = model('Wallet', walletSchema)
+export const walletModel = model<Wallet>('Wallet', walletSchema)

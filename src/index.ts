@@ -12,9 +12,11 @@ import getEnv from './getEnv'
 import Env from './constants/envKeys'
 import userModel from './database/model/user'
 import { parse } from 'graphql'
+import { getBankWallet } from './transaction/transfer'
 
 connectDatabase().then(() => {
   console.log('Database Connected!')
+  getBankWallet()
   const server = new ApolloServer({
     typeDefs,
     context: async ({ req, res }) => {
