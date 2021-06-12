@@ -5,6 +5,7 @@ import * as authResolver from './auth'
 import Heart, * as heartResolver from './heart'
 import Comment, * as commentResolver from './comment'
 import FixReport, * as fixReportResolver from './fixReport'
+import User, * as UserResolver from './user'
 
 export {
   Place,
@@ -12,7 +13,8 @@ export {
   Tag,
   Heart,
   Comment,
-  FixReport
+  FixReport,
+  User
 }
 
 export const Query = {
@@ -20,7 +22,8 @@ export const Query = {
   ...categoryResolver.query,
   ...heartResolver.query,
   ...fixReportResolver.query,
-  ...tagResolver.query
+  ...tagResolver.query,
+  ...UserResolver.query
 }
 
 export const Mutation = {

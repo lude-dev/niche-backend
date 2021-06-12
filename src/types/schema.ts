@@ -32,6 +32,7 @@ export interface User extends Doc {
   name: string
   profile: string
   uid: string
+  wallet: string
 }
 
 export interface Heart extends Doc {

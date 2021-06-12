@@ -11,10 +11,16 @@ const typeDefs = gql`
     label: String
   }
 
+  type Wallet {
+    user: User!
+    balance: Int!
+  }
+
   type User {
     _id: ID!
     name: String!
     profileImage: String
+    wallet: Wallet!
   }
 
   type Tag {
@@ -157,6 +163,7 @@ const typeDefs = gql`
       query: String
     ): [Tag]
     tags: [Tag]
+    myInfo: User
   }
 `
 

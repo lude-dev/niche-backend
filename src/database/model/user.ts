@@ -1,6 +1,5 @@
 import { model, Schema, Types } from "mongoose";
 import { User } from "../../types/schema";
-import { AuthSchema } from "./auth";
 
 const UserSchema = new Schema({
   name: {
@@ -11,6 +10,11 @@ const UserSchema = new Schema({
   uid: {
     type: Types.ObjectId,
     ref: 'Auth',
+    unique: true
+  },
+  wallet: {
+    type: Types.ObjectId,
+    ref: 'Wallet',
     unique: true
   }
 })
