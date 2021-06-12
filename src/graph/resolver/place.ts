@@ -43,6 +43,15 @@ export const nearPlaces = async (parent: unknown, arg: Location): Promise<Place[
   return places
 }
 
+export const queryPlaces = async (parent: unknown, { query }: { query?: string }) => {
+  return await placeModel.find(query ? {
+    name: {
+      $regex: query,
+      $options: 'i'
+    }
+  } : {})
+}
+
 interface PlaceCreateData {
   name: string
   location: {
@@ -101,6 +110,7 @@ export const mutation = {
 
 export const query = {
   nearPlaces,
+  queryPlaces,
   async place(parent: unknown, { placeId }: { placeId: string }) {
     const queriedPlace = await placeModel.findById(placeId)
     console.log(queriedPlace)

@@ -164,6 +164,9 @@ const typeDefs = gql`
     ): [Tag]
     tags: [Tag]
     myInfo: User
+    queryPlaces(
+      query: String
+    ): [Place]
   }
 `
 
