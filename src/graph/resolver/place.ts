@@ -162,12 +162,20 @@ export default {
   category(arg: Place) {
     return categoryModel.findById(arg.category)
   },
+  tags(arg: Place) {
+    return tagModel.find({
+      _id: {
+        $in: arg.tags
+      }
+    })
+  },
   comment(parent: Place) {
     return commentModel.find({
       place: parent._id
     })
   },
   hearted(parent: Place, arg: unknown, context: Context) {
+    if (!context.user) return undefined
     return !!heartModel.findOne({
       user: context.user.uid,
       place: parent._id
