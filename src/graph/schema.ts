@@ -46,7 +46,7 @@ const typeDefs = gql`
     owner: User
     verified: Boolean!
     comment: [Comment]!
-    hearted: Boolean!
+    hearted: Boolean
     heartQuantity: Int!
     commentQuantity: Int!
   }
