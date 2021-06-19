@@ -6,7 +6,7 @@ export const TagSchema = new Schema({
     required: true,
     type: String
   }
-})
+}, { timestamps: true })
 
 const tagModel = model<Tag>('Tag', TagSchema)
 

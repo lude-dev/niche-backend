@@ -19,7 +19,7 @@ const commentSchema = new Schema({
     ref: 'Place',
     required: true
   }
-})
+}, { timestamps: true })
 
 const commentModel = model<Comment>('Comment', commentSchema)
 export default commentModel

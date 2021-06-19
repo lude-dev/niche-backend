@@ -11,6 +11,6 @@ const walletSchema = new Schema({
     default: 0
   },
   isBank: Boolean
-})
+}, { timestamps: true })
 
 export const walletModel = model<Wallet>('Wallet', walletSchema)

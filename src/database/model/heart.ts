@@ -10,7 +10,7 @@ export const HeartSchema = new Schema({
     type: Types.ObjectId,
     ref: 'User'
   }
-})
+}, { timestamps: true })
 
 const heartModel = model<Heart>('Heart', HeartSchema)
 

@@ -39,6 +39,6 @@ const PlaceSchema = new Schema({
     ref: 'User',
     required: true
   }]
-})
+}, { timestamps: true })
 
 export const placeModel = model<Place>('Place', PlaceSchema)

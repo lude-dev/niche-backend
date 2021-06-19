@@ -17,7 +17,7 @@ const UserSchema = new Schema({
     ref: 'Wallet',
     unique: true
   }
-})
+}, { timestamps: true })
 
 const userModel = model<User>('User', UserSchema)
 

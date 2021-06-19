@@ -40,7 +40,7 @@ const fixReportSchema = new Schema({
     default: 0,
     required: true
   }
-})
+}, { timestamps: true })
 
 const fixReportModel = model<FixReport>('FixReport', fixReportSchema)
 export default fixReportModel

@@ -9,6 +9,9 @@ const typeDefs = gql`
   type Category {
     _id: ID!
     label: String
+
+    createdAt: Int
+    updatedAt: Int
   }
 
   type Transaction {
@@ -16,12 +19,18 @@ const typeDefs = gql`
     reason: String
     from: Wallet
     to: Wallet
+    
+    createdAt: Int
+    updatedAt: Int
   }
 
   type Wallet {
     user: User!
     balance: Int!
     transactions: [Transaction]!
+    
+    createdAt: Int
+    updatedAt: Int
   }
 
   type User {
@@ -29,6 +38,9 @@ const typeDefs = gql`
     name: String!
     profileImage: String
     wallet: Wallet!
+    
+    createdAt: Int
+    updatedAt: Int
   }
 
   type Tag {
@@ -49,11 +61,17 @@ const typeDefs = gql`
     hearted: Boolean
     heartQuantity: Int!
     commentQuantity: Int!
+
+    createdAt: Int
+    updatedAt: Int
   }
 
   type Heart {
     _id: ID!
     place: Place
+
+    createdAt: Int
+    updatedAt: Int
   }
 
   type TokenInfo {
@@ -70,6 +88,9 @@ const typeDefs = gql`
     photo: [String]!
     place: Place!
     user: User!
+
+    createdAt: Int
+    updatedAt: Int
   }
 
   type FixReport {
@@ -79,6 +100,9 @@ const typeDefs = gql`
     value: String
     newLocation: Location
     approved: Int!
+
+    createdAt: Int
+    updatedAt: Int
   }
 
   type FixReportPile {

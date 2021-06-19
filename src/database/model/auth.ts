@@ -10,7 +10,7 @@ export const AuthSchema = new Schema({
     required: true,
     type: String
   }
-})
+}, { timestamps: true })
 
 const authModel = model<Auth>('Auth', AuthSchema)
 export default authModel

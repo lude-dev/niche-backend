@@ -18,6 +18,6 @@ const transactionSchema = new Schema({
     ref: 'Wallet',
     required: true,
   },
-})
+}, { timestamps: true })
 
 export const transactionModel = model<Transaction>('Transaction', transactionSchema)
